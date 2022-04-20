@@ -2,7 +2,7 @@
     <id>com.xh.flutter.assets.plugin</id>
     <name>FlutterAssestHelper</name>
     <version>1.0</version>
-    <vendor email="962139864@qq.com" url="https://www.yourcompany.com">xiaoxian</vendor>
+    <vendor email="962139864@qq.com" url="meiyou">xiaoxian</vendor>
 
     <description><![CDATA[
     FlutterSyncAssets  自动导入资源文件，生成 r文件
@@ -32,7 +32,7 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="flutter_sync_assets" class="com.xh.flutter.assets.FlutterSyncAssets" text="FlutterSyncAssets"
+        <action id="com.xh.flutter.assets.FlutterSyncAssets" class="com.xh.flutter.assets.FlutterSyncAssets" text="FlutterSyncAssets"
                 description="自动导入flutter项目的assets资源">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
