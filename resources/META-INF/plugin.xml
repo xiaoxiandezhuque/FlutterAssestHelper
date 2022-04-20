@@ -1,0 +1,41 @@
+<idea-plugin>
+    <id>com.xh.flutter.assets.plugin</id>
+    <name>FlutterAssestHelper</name>
+    <version>1.0</version>
+    <vendor email="962139864@qq.com" url="https://www.yourcompany.com">xiaoxian</vendor>
+
+    <description><![CDATA[
+    FlutterSyncAssets  自动导入资源文件，生成 r文件
+    (Same as Android R.class),可以参考 <a href='https://github.com/xiaoxiandezhuque/FlutterAssestHelper'>GitHub</a>
+    <br>
+    处理了  1.  2.  3.  4.开头的文件目录过滤（多套图片资源问题）
+    <h2>如何使用</h2>
+    <br>
+    <ul>
+        <li>在idea 的  Tools  工具栏有一个 FlutterSyncAssets的图标</li>
+        <li>可以在项目主目录下创建一个配置文件，文件名叫 flutter_assets_config.xml </li>
+        <li>配置文件里面内容，请参考github上面的项目里面的 flutter_assets_config.xml 文件</li>
+    </ul>
+    ]]></description>
+
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="flutter_sync_assets" class="com.xh.flutter.assets.FlutterSyncAssets" text="FlutterSyncAssets"
+                description="自动导入flutter项目的assets资源">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
+
+</idea-plugin>

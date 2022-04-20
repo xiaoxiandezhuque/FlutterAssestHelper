@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <!--   targetDir 默认项目目录，如果混合开发，可能不一样,写绝对路径  -->
+    <!--   scanDir 默认assets 需要扫描的目录,可以多个 以 ，号分开，-->
+    <target targetDir="" scanDir="assets,images"></target>
+    <!--   默认创建，具体位置是  targetDir+ "\generated\r.dart   className 默认是  R " -->
+    <!--   需要创建的映射文件，具体文件位置是  targetDir+createMappingDir+createMappingFileName  -->
+    <mapping isCreateMappingFile="true" createMappingDir="generated" createMappingFileName="r1.dart" className="R1"/>
+    <!--  默认true 是否清除已经写在yaml文件assets下面的数据 -->
+    <assets-data isClearOldData="true"/>
+</config>
