@@ -13,7 +13,7 @@ object YamlFileUtils {
 
     //1.把数据 写入pubspec.yaml 文件
     //2.生成R.目录_文件名的dart文件，用于快速获取文件
-    fun writYamlFile(arrayList: ArrayList<FileBean>, yamlPath: String, configBean:ConfigBean): String {
+    fun writYamlFile(arrayList: ArrayList<FileBean>, yamlPath: String, configBean: ConfigBean): String {
         val starTime = System.currentTimeMillis()
         var errorMsg = ""
 
@@ -51,7 +51,7 @@ object YamlFileUtils {
                 return errorMsg
             }
             //清除之前有的
-            if (configBean.isClearOldData){
+            if (configBean.isClearOldData) {
                 clearAssetsOldData(targetFileLineList, assetsIndex)
             }
             //获取新的数据
@@ -59,7 +59,7 @@ object YamlFileUtils {
             //写入数据到文件
             writeData(yamlPath, targetFileLineList, bufferedReader)
             //生成一个辅助类R.dart
-            if (configBean.isCreateMappingFile){
+            if (configBean.isCreateMappingFile) {
                 createDartClass(sourceData, configBean)
             }
 
@@ -86,7 +86,8 @@ object YamlFileUtils {
      *
      */
     private fun createDartClass(sourceData: Map<String, List<FileBean>>, configBean: ConfigBean) {
-        val targetFileDir = File(configBean.targetDir + File.separator + "lib" + File.separator + configBean.createMappingDir)
+        val targetFileDir =
+            File(configBean.targetDir + File.separator + "lib" + File.separator + configBean.createMappingDir)
 
         if (!targetFileDir.exists()) {
             targetFileDir.mkdir()
@@ -192,10 +193,64 @@ object YamlFileUtils {
         for (i in (assetsIndex + 1) until targetFileLineList.size) {
             if (targetFileLineList[i].startsWith("    - ")) {
                 delList.add(targetFileLineList[i])
-            }else{
+            } else {
                 break
             }
         }
         targetFileLineList.removeAll(delList)
+    }
+
+    fun createDartClassFromDir(sourceData: Map<String, List<FileBean>>, configBean: ConfigBean): String {
+        val targetFileDir =
+            File(configBean.targetDir + File.separator + "lib" + File.separator + configBean.createMappingDir)
+
+        if (!targetFileDir.exists()) {
+            targetFileDir.mkdir()
+        }
+
+        val targetFile = File(targetFileDir, configBean.createMappingFileName)
+
+        if (targetFile.exists()) {
+            targetFile.delete()
+        }
+
+        targetFile.createNewFile()
+
+        val out = BufferedWriter(OutputStreamWriter(FileOutputStream(targetFile), StandardCharsets.UTF_8))
+
+        //FileModel(dir=/assets, fileName=crane_card_dark.png)
+        //FileModel(dir=/assets/b, fileName=b.png)
+        val iterator = sourceData.iterator()
+        out.write("class ${configBean.createMappingClassName} {")
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            //获取字段名称
+            //1.如果是在assets目录下的 则直接是R.文件名 引用
+            //2.如果是在assets的子目录 如assets/image/或者 assets/home 目录 则引用为    R.image_文件名  或者 R.home_文件名 （主要区分不同模块）
+            val arr = next.key.replaceFirst("/", "").split("/")
+            if (arr.size == 1) { //表示只有assets文件
+                for (fileModel in next.value) {
+                    out.write(
+                        "\n\tstatic const String ${fileModel.fileName.split(".")[0]} = \"${
+                            fileModel.dir.replaceFirst(
+                                "/",
+                                ""
+                            )
+                        }/${fileModel.fileName.split(".")[0]}\";"
+                    )
+                }
+            } else {
+                val name = next.key.replace("/assets/", "").replace("/", "_")
+                for (fileModel in next.value) {
+                    out.write(
+                        "\n\tstatic const String ${fileModel.fileName.split(".")[0]} = \"${fileModel.fileName.split(".")[0]}\";"
+                    )
+                }
+            }
+        }
+        out.write("\n}")
+        out.flush()
+        out.close()
+        return "ok"
     }
 }

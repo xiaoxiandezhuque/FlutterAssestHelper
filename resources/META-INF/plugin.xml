@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>com.xh.flutter.assets.plugin</id>
-    <name>FlutterAssestHelper</name>
+    <id>com.xh.flutter.nativeassets.plugin</id>
+    <name>FlutterNativeAssestHelper</name>
     <version>1.0</version>
     <vendor email="962139864@qq.com" url="meiyou">xiaoxian</vendor>
 
@@ -32,8 +32,8 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="com.xh.flutter.assets.FlutterSyncAssets" class="com.xh.flutter.assets.FlutterSyncAssets" text="FlutterSyncAssets"
-                description="自动导入flutter项目的assets资源">
+        <action id="com.xh.flutter.assets.FlutterSyncNativeAssets" class="com.xh.flutter.assets.FlutterSyncAssets" text="FlutterSyncNativeAssets"
+                description="自动生成andorid natvice 目录对应的资源文件">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>

@@ -61,7 +61,7 @@ class FlutterAssetsHelper(private val configBean: ConfigBean) {
     fun startWork(): String {
         val files = mutableListOf<File>()
         for (scanDir in configBean.scanDirs) {
-            val assetsFileDir = File((configBean.targetDir + File.separator + scanDir).replace("\\", "/"))
+            val assetsFileDir = File((scanDir).replace("\\", "/"))
             val arrayOfFiles = assetsFileDir.listFiles()
             arrayOfFiles?.let {
                 files.addAll(arrayOfFiles)
@@ -78,9 +78,11 @@ class FlutterAssetsHelper(private val configBean: ConfigBean) {
 
         println("fileList = ${fileLists.size}")
 
-        val yamlPath = (configBean.targetDir + File.separator + Constants.PUBSPEC).replace("\\", "/")
+//        val yamlPath = (configBean.targetDir + File.separator + Constants.PUBSPEC).replace("\\", "/")
 
-        return YamlFileUtils.writYamlFile(fileLists, yamlPath, configBean)
+//        return YamlFileUtils.writYamlFile(fileLists, yamlPath, configBean)
+        val sourceData = fileLists.groupBy { it.dir }
+        return YamlFileUtils.createDartClassFromDir(sourceData, configBean)
     }
 
     /**

@@ -22,7 +22,12 @@ class FlutterSyncAssets : AnAction() {
         }
         val configBean = ConfigBean(
             XmlUtils.getValueByAttribute(configElement, "target", "targetDir", e.project!!.basePath!!),
-            XmlUtils.getValueByAttribute(configElement, "target", "scanDir", "assets").split(","),
+            XmlUtils.getValueByAttribute(
+                configElement,
+                "target",
+                "scanDir",
+                e.project!!.basePath!! + File.separator + "assets"
+            ).split(","),
             XmlUtils.getValueByAttribute(configElement, "mapping", "isCreateMappingFile", "true").toBoolean(),
             XmlUtils.getValueByAttribute(configElement, "mapping", "createMappingDir", "generated"),
             XmlUtils.getValueByAttribute(configElement, "mapping", "createMappingFileName", "r.dart"),
